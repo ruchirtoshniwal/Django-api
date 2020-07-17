@@ -1,5 +1,5 @@
 from rest_framework import serializers 
-from tapi.models import Tapi,Papi,Iapi,Smainapi
+from tapi.models import Tapi,Papi,Iapi,Smainapi,Stranapi
  
  
 class TapiSerializer(serializers.ModelSerializer):
@@ -74,3 +74,20 @@ class SmainapiSerializer(serializers.ModelSerializer):
 			'INV1EDT',
 			'INV1REMARK'
 			)
+
+class StranapiSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Stranapi
+        fields = ('INV1REFNO',
+				  'INV2DATE',
+				  'INV2TYPE',
+				  'INV2PRTYCD',
+				  'INV2PRODCD',
+				  'INV2UNIT',
+				  'INV2BATCH',
+				  'INV2QNT',
+				  'INV2RATE',
+				  'INV2AMT',
+				  'INV2GSTPER',
+				  'INV2GSTAMT'
+				  )            

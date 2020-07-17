@@ -6,8 +6,8 @@ from django.http.response import JsonResponse
 from rest_framework.parsers import JSONParser 
 from rest_framework import status
  
-from tapi.models import Tapi,Papi,Iapi,Smainapi
-from tapi.serializers import TapiSerializer,PapiSerializer,IapiSerializer,SmainapiSerializer
+from tapi.models import Tapi,Papi,Iapi,Smainapi,Stranapi
+from tapi.serializers import TapiSerializer,PapiSerializer,IapiSerializer,SmainapiSerializer,StranapiSerializer
 from rest_framework.decorators import api_view
 
 
@@ -167,7 +167,7 @@ def iapis_detail(request, pk):
         return JsonResponse({'message': 'Item was deleted successfully!'}, status=status.HTTP_204_NO_CONTENT)        
 
 
-#//////////////salesman api
+#//////////////salesmain api
 
 @api_view(['GET', 'POST', 'DELETE'])
 def smainapis_list(request):
@@ -219,3 +219,55 @@ def smainapis_detail(request, pk):
         smainapis.delete() 
         return JsonResponse({'message': 'Salesmain was deleted successfully!'}, status=status.HTTP_204_NO_CONTENT)        
  
+
+#//////////////salestran api
+
+@api_view(['GET', 'POST', 'DELETE'])
+def stranapis_list(request):
+    # GET list of salestran, POST a new salestrans, DELETE all salestran
+    if request.method == 'GET':
+        stranapi = Stranapi.objects.all()
+        title = request.GET.get('title', None)
+        if title is not None:
+            stranapi = stranapi.filter(title__icontains=title)
+        
+        salestran_serializer = StranapiSerializer(stranapi, many=True)
+        return JsonResponse(salestran_serializer.data, safe=False)
+
+    elif request.method == 'POST':
+        stranapis_data = JSONParser().parse(request)
+        stranapis_serializer = StranapiSerializer(data=stranapis_data)
+        if stranapis_serializer.is_valid():
+            stranapis_serializer.save()
+            return JsonResponse(stranapis_serializer.data, status=status.HTTP_201_CREATED) 
+        return JsonResponse(stranapis_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+    elif request.method == 'DELETE':
+        count = Stranapi.objects.all().delete()
+        return JsonResponse({'message': '{} Salestrans were deleted successfully!'.format(count[0])}, status=status.HTTP_204_NO_CONTENT)    
+ 
+@api_view(['GET', 'PUT', 'DELETE'])
+def stranapis_detail(request, pk):
+    # find salestrans by pk (id)
+    try: 
+        stranapis = Stranapi.objects.get(pk=pk) 
+    except Stranapi.DoesNotExist: 
+        return JsonResponse({'message': 'The salestrans does not exist'}, status=status.HTTP_404_NOT_FOUND) 
+ 
+    # GET / PUT / DELETE salestrans
+    
+    if request.method == 'GET': 
+        stranapis_serializer = StranapiSerializer(stranapis) 
+        return JsonResponse(stranapis_serializer.data) 
+ 
+    elif request.method == 'PUT': 
+        stranapis_data = JSONParser().parse(request) 
+        stranapis_serializer = StranapiSerializer(stranapis, data=stranapis_data) 
+        if stranapis_serializer.is_valid(): 
+            stranapis_serializer.save() 
+            return JsonResponse(stranapis_serializer.data) 
+        return JsonResponse(stranapis_serializer.errors, status=status.HTTP_400_BAD_REQUEST) 
+ 
+    elif request.method == 'DELETE': 
+        stranapis.delete() 
+        return JsonResponse({'message': 'Salestran was deleted successfully!'}, status=status.HTTP_204_NO_CONTENT)        

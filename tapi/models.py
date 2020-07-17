@@ -64,5 +64,22 @@ class Smainapi(models.Model):
     INV1DONE = models.BooleanField()
     INV1UDT = models.DateField()
     INV1EDT = models.DateField()
-    INV1REMARK = models.CharField(max_length=60)    
+    INV1REMARK = models.CharField(max_length=60) 
+
+
+#///////////// salestran api
+
+class Stranapi(models.Model):
+    INV1REFNO = models.CharField(max_length=5,blank=False, default='',auto_created=False, primary_key=True, serialize=False, verbose_name='INV1REFNO')
+    INV2DATE = models.DateField()
+    INV2TYPE = models.CharField(max_length=70, blank=False, default='')
+    INV2PRTYCD = models.ForeignKey(Papi, to_field='patient_id', null=False,on_delete=models.CASCADE)
+    INV2PRODCD = models.ForeignKey(Iapi, to_field='ITEMID', null=False,on_delete=models.CASCADE)
+    INV2UNIT = models.CharField(max_length=70, blank=False, default='')
+    INV2BATCH = models.CharField(max_length=70, blank=False, default='')
+    INV2QNT = models.DecimalField(max_digits=12, decimal_places=4)
+    INV2RATE = models.DecimalField(max_digits=12, decimal_places=4)
+    INV2AMT = models.DecimalField(max_digits=12, decimal_places=4)
+    INV2GSTPER = models.DecimalField(max_digits=12, decimal_places=4)
+    INV2GSTAMT = models.DecimalField(max_digits=12, decimal_places=4)
 
