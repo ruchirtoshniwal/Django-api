@@ -6,8 +6,8 @@ from django.http.response import JsonResponse
 from rest_framework.parsers import JSONParser 
 from rest_framework import status
  
-from tapi.models import Tapi,Papi,Iapi
-from tapi.serializers import TapiSerializer,PapiSerializer,IapiSerializer
+from tapi.models import Tapi,Papi,Iapi,Smainapi
+from tapi.serializers import TapiSerializer,PapiSerializer,IapiSerializer,SmainapiSerializer
 from rest_framework.decorators import api_view
 
 
@@ -165,3 +165,57 @@ def iapis_detail(request, pk):
     elif request.method == 'DELETE': 
         iapis.delete() 
         return JsonResponse({'message': 'Item was deleted successfully!'}, status=status.HTTP_204_NO_CONTENT)        
+
+
+#//////////////salesman api
+
+@api_view(['GET', 'POST', 'DELETE'])
+def smainapis_list(request):
+    # GET list of salesmain, POST a new salesmains, DELETE all salesmain
+    if request.method == 'GET':
+        smainapi = Smainapi.objects.all()
+        title = request.GET.get('title', None)
+        if title is not None:
+            smainapi = smainapi.filter(title__icontains=title)
+        
+        salesmain_serializer = SmainapiSerializer(smainapi, many=True)
+        return JsonResponse(salesmain_serializer.data, safe=False)
+
+    elif request.method == 'POST':
+        smainapis_data = JSONParser().parse(request)
+        smainapis_serializer = SmainapiSerializer(data=smainapis_data)
+        if smainapis_serializer.is_valid():
+            smainapis_serializer.save()
+            return JsonResponse(smainapis_serializer.data, status=status.HTTP_201_CREATED) 
+        return JsonResponse(smainapis_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+    elif request.method == 'DELETE':
+        count = Smainapi.objects.all().delete()
+        return JsonResponse({'message': '{} Salesmains were deleted successfully!'.format(count[0])}, status=status.HTTP_204_NO_CONTENT)    
+ 
+@api_view(['GET', 'PUT', 'DELETE'])
+def smainapis_detail(request, pk):
+    # find salesmains by pk (id)
+    try: 
+        smainapis = Smainapi.objects.get(pk=pk) 
+    except Smainapi.DoesNotExist: 
+        return JsonResponse({'message': 'The salesmains does not exist'}, status=status.HTTP_404_NOT_FOUND) 
+ 
+    # GET / PUT / DELETE salesmains
+    
+    if request.method == 'GET': 
+        smainapis_serializer = SmainapiSerializer(smainapis) 
+        return JsonResponse(smainapis_serializer.data) 
+ 
+    elif request.method == 'PUT': 
+        smainapis_data = JSONParser().parse(request) 
+        smainapis_serializer = SmainapiSerializer(smainapis, data=smainapis_data) 
+        if smainapis_serializer.is_valid(): 
+            smainapis_serializer.save() 
+            return JsonResponse(smainapis_serializer.data) 
+        return JsonResponse(smainapis_serializer.errors, status=status.HTTP_400_BAD_REQUEST) 
+ 
+    elif request.method == 'DELETE': 
+        smainapis.delete() 
+        return JsonResponse({'message': 'Salesmain was deleted successfully!'}, status=status.HTTP_204_NO_CONTENT)        
+ 

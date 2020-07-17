@@ -7,5 +7,7 @@ urlpatterns = [
     url(r'^api/patient$', views.papis_list),
     url(r'^api/patient/(?P<pk>[0-9]+)$', views.papis_detail),
     url(r'^api/item$', views.iapis_list),
-    url(r'^api/item/(?P<pk>[0-9]+)$', views.iapis_detail)
+    url(r'^api/item/(?P<pk>[0-9]+)$', views.iapis_detail),
+    url(r'^api/salesmain$', views.smainapis_list),
+    url(r'^api/salesmain/(?P<pk>[0-9]+)$', views.smainapis_detail)
 ]

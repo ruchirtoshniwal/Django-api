@@ -1,5 +1,5 @@
 from rest_framework import serializers 
-from tapi.models import Tapi,Papi,Iapi
+from tapi.models import Tapi,Papi,Iapi,Smainapi
  
  
 class TapiSerializer(serializers.ModelSerializer):
@@ -43,3 +43,34 @@ class IapiSerializer(serializers.ModelSerializer):
                   'gstPER',
                   'slcode',
                   'purcode')                                  
+
+
+class SmainapiSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Smainapi
+        fields = ('INV1REFNO',
+        	'INV1DATE',
+        	'INV1TYPE',
+        	'INV1PRTYCD',
+        	'NV1INVNO',
+        	'INV1INVDT',
+        	'INV1PAYTM',
+        	'INV1DESP',
+			'INV1PKGS',
+			'INV1BROKCD',
+			'INV1CHLNO',
+			'INV1CHLDT',
+			'INV1AMT',
+			'INV1NET',
+			'INV1DISPER',
+			'INV1DISAMT',
+			'INV1GSTPER',
+			'INV1GSTAMT',
+			'INV1OTH',
+			'INV1ROUND',
+			'INV1BRAMT',
+			'INV1DONE',
+			'INV1UDT',
+			'INV1EDT',
+			'INV1REMARK'
+			)
