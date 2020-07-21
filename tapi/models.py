@@ -1,5 +1,6 @@
 from django.db import models
 
+
 # Create your models here.
 class Tapi(models.Model):
     TYPEID = models.IntegerField(blank=False, default='',auto_created=False, primary_key=True, serialize=False, verbose_name='TYPEID')
@@ -82,4 +83,5 @@ class Stranapi(models.Model):
     INV2AMT = models.DecimalField(max_digits=12, decimal_places=4)
     INV2GSTPER = models.DecimalField(max_digits=12, decimal_places=4)
     INV2GSTAMT = models.DecimalField(max_digits=12, decimal_places=4)
+
 

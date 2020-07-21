@@ -9,7 +9,7 @@ urlpatterns = [
     url(r'^api/item$', views.iapis_list),
     url(r'^api/item/(?P<pk>[0-9]+)$', views.iapis_detail),
     url(r'^api/salesmain$', views.smainapis_list),
-    url(r'^api/salesmain/(?P<pk>[0-9]+)$', views.smainapis_detail),
+    url(r'^api/salesmain/(?P<pk>[^/]+)$', views.smainapis_detail),
     url(r'^api/salestran$', views.stranapis_list),
-    url(r'^api/salestran/(?P<pk>[0-9]+)$', views.stranapis_detail)
+    url(r'^api/salestran/(?P<pk>[^/]+)$', views.stranapis_detail)
 ]

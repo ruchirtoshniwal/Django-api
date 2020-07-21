@@ -11,7 +11,7 @@ from tapi.serializers import TapiSerializer,PapiSerializer,IapiSerializer,Smaina
 from rest_framework.decorators import api_view
 
 
-@api_view(['GET', 'POST', 'DELETE'])
+@api_view(['GET', 'POST'])
 def tapis_list(request):
     # GET list of tapi, POST a new tapis, DELETE all tapi
     if request.method == 'GET':
@@ -31,9 +31,7 @@ def tapis_list(request):
             return JsonResponse(tapis_serializer.data, status=status.HTTP_201_CREATED) 
         return JsonResponse(tapis_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
-    elif request.method == 'DELETE':
-        count = Tapi.objects.all().delete()
-        return JsonResponse({'message': '{} Tapis were deleted successfully!'.format(count[0])}, status=status.HTTP_204_NO_CONTENT)    
+    
  
 @api_view(['GET', 'PUT', 'DELETE'])
 def tapis_detail(request, pk):
@@ -64,7 +62,7 @@ def tapis_detail(request, pk):
 # ////////////////////// patient api        
 
 
-@api_view(['GET', 'POST', 'DELETE'])
+@api_view(['GET', 'POST'])
 def papis_list(request):
     # GET list of patient, POST a new patients, DELETE all patient
     if request.method == 'GET':
@@ -84,9 +82,7 @@ def papis_list(request):
             return JsonResponse(papis_serializer.data, status=status.HTTP_201_CREATED) 
         return JsonResponse(papis_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
-    elif request.method == 'DELETE':
-        count = Papi.objects.all().delete()
-        return JsonResponse({'message': '{} Patients were deleted successfully!'.format(count[0])}, status=status.HTTP_204_NO_CONTENT)    
+    
  
 @api_view(['GET', 'PUT', 'DELETE'])
 def papis_detail(request, pk):
@@ -136,9 +132,7 @@ def iapis_list(request):
             return JsonResponse(iapis_serializer.data, status=status.HTTP_201_CREATED) 
         return JsonResponse(iapis_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
-    elif request.method == 'DELETE':
-        count = Iapi.objects.all().delete()
-        return JsonResponse({'message': '{} Items were deleted successfully!'.format(count[0])}, status=status.HTTP_204_NO_CONTENT)    
+    
  
 @api_view(['GET', 'PUT', 'DELETE'])
 def iapis_detail(request, pk):
@@ -169,7 +163,7 @@ def iapis_detail(request, pk):
 
 #//////////////salesmain api
 
-@api_view(['GET', 'POST', 'DELETE'])
+@api_view(['GET', 'POST'])
 def smainapis_list(request):
     # GET list of salesmain, POST a new salesmains, DELETE all salesmain
     if request.method == 'GET':
@@ -188,13 +182,11 @@ def smainapis_list(request):
             smainapis_serializer.save()
             return JsonResponse(smainapis_serializer.data, status=status.HTTP_201_CREATED) 
         return JsonResponse(smainapis_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    
-    elif request.method == 'DELETE':
-        count = Smainapi.objects.all().delete()
-        return JsonResponse({'message': '{} Salesmains were deleted successfully!'.format(count[0])}, status=status.HTTP_204_NO_CONTENT)    
  
 @api_view(['GET', 'PUT', 'DELETE'])
 def smainapis_detail(request, pk):
+    import pdb; pdb.set_trace()
+    breakpoint()
     # find salesmains by pk (id)
     try: 
         smainapis = Smainapi.objects.get(pk=pk) 
@@ -202,7 +194,6 @@ def smainapis_detail(request, pk):
         return JsonResponse({'message': 'The salesmains does not exist'}, status=status.HTTP_404_NOT_FOUND) 
  
     # GET / PUT / DELETE salesmains
-    
     if request.method == 'GET': 
         smainapis_serializer = SmainapiSerializer(smainapis) 
         return JsonResponse(smainapis_serializer.data) 
@@ -217,8 +208,7 @@ def smainapis_detail(request, pk):
  
     elif request.method == 'DELETE': 
         smainapis.delete() 
-        return JsonResponse({'message': 'Salesmain was deleted successfully!'}, status=status.HTTP_204_NO_CONTENT)        
- 
+        return JsonResponse({'message': 'Smainapi was deleted successfully!'}, status=status.HTTP_204_NO_CONTENT)
 
 #//////////////salestran api
 
@@ -270,4 +260,4 @@ def stranapis_detail(request, pk):
  
     elif request.method == 'DELETE': 
         stranapis.delete() 
-        return JsonResponse({'message': 'Salestran was deleted successfully!'}, status=status.HTTP_204_NO_CONTENT)        
+        return JsonResponse({'message': 'Salestran was deleted successfully!'}, status=status.HTTP_204_NO_CONTENT)   
