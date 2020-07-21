@@ -185,8 +185,6 @@ def smainapis_list(request):
  
 @api_view(['GET', 'PUT', 'DELETE'])
 def smainapis_detail(request, pk):
-    import pdb; pdb.set_trace()
-    breakpoint()
     # find salesmains by pk (id)
     try: 
         smainapis = Smainapi.objects.get(pk=pk) 
@@ -194,6 +192,7 @@ def smainapis_detail(request, pk):
         return JsonResponse({'message': 'The salesmains does not exist'}, status=status.HTTP_404_NOT_FOUND) 
  
     # GET / PUT / DELETE salesmains
+    
     if request.method == 'GET': 
         smainapis_serializer = SmainapiSerializer(smainapis) 
         return JsonResponse(smainapis_serializer.data) 
@@ -208,7 +207,7 @@ def smainapis_detail(request, pk):
  
     elif request.method == 'DELETE': 
         smainapis.delete() 
-        return JsonResponse({'message': 'Smainapi was deleted successfully!'}, status=status.HTTP_204_NO_CONTENT)
+        return JsonResponse({'message': 'Salesmain was deleted successfully!'}, status=status.HTTP_204_NO_CONTENT)        
 
 #//////////////salestran api
 
