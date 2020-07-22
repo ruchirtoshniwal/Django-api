@@ -1,5 +1,5 @@
 from rest_framework import serializers 
-from tapi.models import Tapi,Papi,Iapi,Smainapi,Stranapi,Ledgerapi
+from tapi.models import Tapi,Papi,Iapi,Smainapi,Stranapi,Ledgerapi,Bookmasterapi
  
  
 class TapiSerializer(serializers.ModelSerializer):

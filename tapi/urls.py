@@ -14,6 +14,6 @@ urlpatterns = [
     url(r'^api/salestran/(?P<pk>[^/]+)$', views.stranapis_detail),
     url(r'^api/ledger$', views.ledgerapis_list),
     url(r'^api/ledger/(?P<pk>[^/]+)$', views.ledgerapis_detail),
-    url(r'^api/bookmaster$', views.bookmasters_list),
-    url(r'^api/bookmaster/(?P<pk>[^/]+)$', views.bookmasters_detail)
+    url(r'^api/bookmaster$', views.bookmasterapis_list),
+    url(r'^api/bookmaster/(?P<pk>[0-9]+)$', views.bookmasterapis_detail)
 ]
