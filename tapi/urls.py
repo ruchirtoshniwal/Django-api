@@ -11,5 +11,9 @@ urlpatterns = [
     url(r'^api/salesmain$', views.smainapis_list),
     url(r'^api/salesmain/(?P<pk>[^/]+)$', views.smainapis_detail),
     url(r'^api/salestran$', views.stranapis_list),
-    url(r'^api/salestran/(?P<pk>[^/]+)$', views.stranapis_detail)
+    url(r'^api/salestran/(?P<pk>[^/]+)$', views.stranapis_detail),
+    url(r'^api/ledger$', views.ledgerapis_list),
+    url(r'^api/ledger/(?P<pk>[^/]+)$', views.ledgerapis_detail),
+    url(r'^api/bookmaster$', views.bookmasters_list),
+    url(r'^api/bookmaster/(?P<pk>[^/]+)$', views.bookmasters_detail)
 ]

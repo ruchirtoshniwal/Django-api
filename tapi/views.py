@@ -6,8 +6,8 @@ from django.http.response import JsonResponse
 from rest_framework.parsers import JSONParser 
 from rest_framework import status
  
-from tapi.models import Tapi,Papi,Iapi,Smainapi,Stranapi
-from tapi.serializers import TapiSerializer,PapiSerializer,IapiSerializer,SmainapiSerializer,StranapiSerializer
+from tapi.models import Tapi,Papi,Iapi,Smainapi,Stranapi,Ledgerapi
+from tapi.serializers import TapiSerializer,PapiSerializer,IapiSerializer,SmainapiSerializer,StranapiSerializer,LedgerapiSerializer
 from rest_framework.decorators import api_view
 
 
@@ -260,3 +260,53 @@ def stranapis_detail(request, pk):
     elif request.method == 'DELETE': 
         stranapis.delete() 
         return JsonResponse({'message': 'Salestran was deleted successfully!'}, status=status.HTTP_204_NO_CONTENT)   
+
+#//////////////Ledger api
+
+@api_view(['GET', 'POST'])
+def ledgerapis_list(request):
+    # GET list of ledger, POST a new ledgers, DELETE all ledger
+    if request.method == 'GET':
+        ledgerapi = Ledgerapi.objects.all()
+        title = request.GET.get('title', None)
+        if title is not None:
+            ledgerapi = ledgerapi.filter(title__icontains=title)
+        
+        salestran_serializer = LedgerapiSerializer(ledgerapi, many=True)
+        return JsonResponse(salestran_serializer.data, safe=False)
+
+    elif request.method == 'POST':
+        ledgerapis_data = JSONParser().parse(request)
+        ledgerapis_serializer = LedgerapiSerializer(data=ledgerapis_data)
+        if ledgerapis_serializer.is_valid():
+            ledgerapis_serializer.save()
+            return JsonResponse(ledgerapis_serializer.data, status=status.HTTP_201_CREATED) 
+        return JsonResponse(ledgerapis_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+    
+ 
+@api_view(['GET', 'PUT', 'DELETE'])
+def ledgerapis_detail(request, pk):
+    # find ledgers by pk (id)
+    try: 
+        ledgerapis = Ledgerapi.objects.get(pk=pk) 
+    except Ledgerapi.DoesNotExist: 
+        return JsonResponse({'message': 'The ledgers does not exist'}, status=status.HTTP_404_NOT_FOUND) 
+ 
+    # GET / PUT / DELETE ledgers
+    
+    if request.method == 'GET': 
+        ledgerapis_serializer = LedgerapiSerializer(ledgerapis) 
+        return JsonResponse(ledgerapis_serializer.data) 
+ 
+    elif request.method == 'PUT': 
+        ledgerapis_data = JSONParser().parse(request) 
+        ledgerapis_serializer = LedgerapiSerializer(ledgerapis, data=ledgerapis_data) 
+        if ledgerapis_serializer.is_valid(): 
+            ledgerapis_serializer.save() 
+            return JsonResponse(ledgerapis_serializer.data) 
+        return JsonResponse(ledgerapis_serializer.errors, status=status.HTTP_400_BAD_REQUEST) 
+ 
+    elif request.method == 'DELETE': 
+        ledgerapis.delete() 
+        return JsonResponse({'message': 'Ledger was deleted successfully!'}, status=status.HTTP_204_NO_CONTENT)   

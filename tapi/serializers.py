@@ -1,5 +1,5 @@
 from rest_framework import serializers 
-from tapi.models import Tapi,Papi,Iapi,Smainapi,Stranapi
+from tapi.models import Tapi,Papi,Iapi,Smainapi,Stranapi,Ledgerapi
  
  
 class TapiSerializer(serializers.ModelSerializer):
@@ -90,4 +90,30 @@ class StranapiSerializer(serializers.ModelSerializer):
 				  'INV2AMT',
 				  'INV2GSTPER',
 				  'INV2GSTAMT'
-				  )            
+				  )   
+
+
+#ledger api
+class LedgerapiSerializer(serializers.ModelSerializer):
+ 
+    class Meta:
+        model = Ledgerapi
+        fields = ('TRNNO',
+                  'TRNDATE',
+                  'TRNTYPE',
+                  'TRNCODE',
+                  'TRNAMT',
+                  'AMTTYPE',
+                  'TRNNER')
+
+class BookmasterapiSerializer(serializers.ModelSerializer): 
+    
+    class Meta:
+        model = Bookmasterapi
+        fields = ('BOOKID',
+                  'BOOKNAME',
+                  'BOOKTYPE',
+                  'OPBAL',
+                  'CLBAL',
+                  'OPBAL_TYPE',
+                  'CLBAL_TYPE')                                   

@@ -1,0 +1,48 @@
+<div class="container">
+  <div class="navbar-nav mr-auto">
+
+    <a routerLink="add" class="nav-link pr-5 pl-5">Add</a>
+
+</div>
+</div>
+
+
+<div class="list row">
+  <div class="col-md-6">
+    <h4>Type List</h4>
+    <ul class="list-group">
+      <li
+        class="list-group-item"
+        *ngFor="let type of type; let i = index"
+        [class.active]="i == currentIndex"
+        (click)="setActiveType(type, i)"
+      >
+        {{ type.TYPEID }}
+      </li>
+    </ul>
+
+    <button class="m-3 btn btn-sm btn-danger" (click)="removeAllType()">
+      Remove All
+    </button>
+  </div>
+  <div class="col-md-6">
+    <div *ngIf="currentType">
+      <h4>Type</h4>
+      <div>
+        <label><strong>Type:</strong></label> {{ currentType.TYPEID }}
+      </div>
+      <div>
+        <label><strong>Description:</strong></label>
+        {{ currentType.TYPEDISCRIPTION }}
+      </div>
+      <a class="badge badge-warning" href="/type/{{ currentType.TYPEID }}">
+        Edit
+      </a>
+    </div>
+
+    <div *ngIf="!currentType">
+      <br />
+      <p>Please click on a Type...</p>
+    </div>
+  </div>
+</div>

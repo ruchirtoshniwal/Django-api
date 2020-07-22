@@ -84,4 +84,23 @@ class Stranapi(models.Model):
     INV2GSTPER = models.DecimalField(max_digits=12, decimal_places=4)
     INV2GSTAMT = models.DecimalField(max_digits=12, decimal_places=4)
 
+#ledger api
+class Ledgerapi(models.Model):
+    TRNNO= models.CharField(max_length=10,blank=False, default='',auto_created=False, primary_key=True, serialize=False, verbose_name='TRNNO')
+    TRNDATE= models.DateField()
+    TRNTYPE= models.CharField(max_length=70, blank=False, default='')
+    TRNCODE= models.IntegerField()
+    TRNAMT= models.DecimalField(max_digits=12, decimal_places=4)
+    AMTTYPE= models.CharField(max_length=70, blank=False, default='')
+    TRNNER= models.CharField(max_length=70, blank=False, default='')
+
+class Bookmasterapi(models.Model):
+    BOOKID= models.IntegerField(blank=False, default='',auto_created=False, primary_key=True, serialize=False, verbose_name='BOOKID')
+    BOOKNAME= models.CharField(max_length=70, blank=False, default='')
+    BOOKTYPE= models.CharField(max_length=70, blank=False, default='')
+    OPBAL= models.DecimalField(max_digits=12, decimal_places=4)
+    CLBAL= models.DecimalField(max_digits=12, decimal_places=4)
+    OPBAL_TYPE= models.CharField(max_length=70, blank=False, default='')
+    CLBAL_TYPE= models.CharField(max_length=70, blank=False, default='')
+
 
